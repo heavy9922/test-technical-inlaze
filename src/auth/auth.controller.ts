@@ -20,7 +20,7 @@ export class AuthController {
 
   @Post('login')
   loginUser(@Body() loginUserDto: LoginUserDto) {
-    return this.authService.loginUser(loginUserDto);
+    return this.authService.login(loginUserDto);
   }
 
   @Post('logout')

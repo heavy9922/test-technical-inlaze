@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -14,7 +15,10 @@ import { JwtPayload } from './interfaces/jwt-payload.interface';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from './interfaces/login-user';
 import { Token } from './interfaces/token.type';
-
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
+import { generateKey } from '../utils/redis';
+import { Redis, RedisLogin } from './interfaces/redis.interface';
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger('auth');
@@ -23,6 +27,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userReporyEntity: Repository<User>,
     private readonly jwtService: JwtService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async create(createAuthDto: CreateAuthDto) {
@@ -59,6 +64,29 @@ export class AuthService {
       ...user,
       token: this.getJwtToken({ id: user.id }),
     };
+  }
+
+  async loginRedis(loginUserDto: LoginUserDto) {
+    let data: RedisLogin;
+    let key: string = generateKey(loginUserDto.email);
+    let keyString: string = `${loginUserDto.email}-login.${key}`;
+    let cache: RedisLogin = await this.cacheManager.get(keyString);
+    if (!cache) {
+      data = await this.loginUser(loginUserDto);
+      await this.cacheManager.set(keyString, data, 3600);
+    } else {
+      data = cache;
+    }
+    return data;
+  }
+  async login(loginUserDto: LoginUserDto) {
+    let data: RedisLogin;
+    if (process.env.REDIS) {
+      data = await this.loginRedis(loginUserDto);
+    } else {
+      data = await this.loginUser(loginUserDto);
+    }
+    return data;
   }
 
   logoutUser(token: Token) {
