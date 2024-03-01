@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  redis:
+    container_name: 'redis-inlaze'
+    image: redis:alpine
+    restart: always
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass inlaze2024
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=inlaze
+      - POSTGRES_USER=inlaze
+      - POSTGRES_PASSWORD=inlaze2024
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@inlaze.com
+      - PGADMIN_DEFAULT_PASSWORD=inlaze2024
+    ports:
+      - 8080:80
