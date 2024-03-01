@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     CacheModule.registerAsync({
@@ -34,6 +35,7 @@ import { AuthModule } from './auth/auth.module';
       rootPath: join(__dirname, '..', 'public'),
     }),
     AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
