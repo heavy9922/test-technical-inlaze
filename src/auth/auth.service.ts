@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Auth } from './entities/auth.entity';
+import { User } from './entities/auth.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
@@ -20,8 +20,8 @@ export class AuthService {
   private readonly logger = new Logger('auth');
   private readonly blacklist: Set<string> = new Set<string>();
   constructor(
-    @InjectRepository(Auth)
-    private readonly userReporyEntity: Repository<Auth>,
+    @InjectRepository(User)
+    private readonly userReporyEntity: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -63,6 +63,25 @@ export class AuthService {
 
   logoutUser(token: Token) {
     this.blacklist.add(token);
+  }
+
+  async validateToken(token: string): Promise<boolean> {
+    return !this.blacklist.has(token);
+  }
+
+  async refreshToken(userId: string) {
+    const user = await this.findUserById(userId);
+    if (!user) {
+      throw new UnauthorizedException('Invalid user');
+    }
+
+    const payload = { id: user.id };
+    return { access_token: this.jwtService.sign(payload) };
+  }
+
+  async findUserById(id: string) {
+    const user = await this.userReporyEntity.findOneBy({ id });
+    return user;
   }
 
   private getJwtToken(payload: JwtPayload) {
