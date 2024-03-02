@@ -42,7 +42,7 @@ export class CommonService {
               <hr />
               <h3>Bienvenido a nuestra red social, Disfrutala !!!</h3>
               <a
-                href="http://localhost:3000/api/auth/confirm?isConfirmed=true&email=${to}" target="_blank"
+                href="${process.env.HOST_API}:${process.env.PORT}/api/auth/confirm?isConfirmed=true&email=${to}" target="_blank"
                 >Confirmar registro</a
               >
             </div>
