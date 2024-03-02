@@ -18,7 +18,7 @@ import { Token } from './interfaces/token.type';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { generateKey } from '../utils/redis';
-import { Redis, RedisLogin } from './interfaces/redis.interface';
+import { RedisLogin } from './interfaces/redis.interface';
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger('auth');

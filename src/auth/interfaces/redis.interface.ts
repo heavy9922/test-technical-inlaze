@@ -6,10 +6,3 @@ export interface RedisLogin {
   email: string;
   password: string;
 }
-
-export interface Redis {
-  id: string;
-  token: string;
-  email: string;
-  password: string;
-}
