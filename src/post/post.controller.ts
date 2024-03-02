@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -15,6 +16,7 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { User } from 'src/auth/entities/auth.entity';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('post')
 @ApiTags('Post')
@@ -42,8 +44,8 @@ export class PostController {
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 403, description: 'Forbidden. Token related.' })
   @Auth(ValidRoles.user)
-  findAll() {
-    return this.postService.findAll();
+  findAll(@Query() paginationDto: PaginationDto, @GetUser() user: User) {
+    return this.postService.findAll(paginationDto, user);
   }
 
   @Get(':id')

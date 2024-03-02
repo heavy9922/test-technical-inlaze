@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 import { PostModule } from './post/post.module';
 import { EnvConfiguration } from './config/app.config';
 import { JoiValidationSchema } from './config/joi.validation';
+import { CommonModule } from './common/common.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -43,6 +44,7 @@ import { JoiValidationSchema } from './config/joi.validation';
     AuthModule,
     UsersModule,
     PostModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
