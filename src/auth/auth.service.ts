@@ -22,7 +22,7 @@ import { Redis, RedisLogin } from './interfaces/redis.interface';
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger('auth');
-  private readonly blacklist: Set<string> = new Set<string>();
+  public readonly blacklist: Set<string> = new Set<string>();
   constructor(
     @InjectRepository(User)
     private readonly userReporyEntity: Repository<User>,

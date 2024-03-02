@@ -17,6 +17,7 @@ import { ValidRoles } from 'src/auth/interfaces/valid-roles';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { User } from 'src/auth/entities/auth.entity';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { JwtAuthGuard } from 'src/auth/decorators/logout.decorator';
 
 @Controller('post')
 @ApiTags('Post')
@@ -44,7 +45,12 @@ export class PostController {
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 403, description: 'Forbidden. Token related.' })
   @Auth(ValidRoles.user)
-  findAll(@Query() paginationDto: PaginationDto, @GetUser() user: User) {
+  // @JwtAuthGuard()
+  findAll(
+    @Query() paginationDto: PaginationDto,
+    @GetUser() user: User,
+    @JwtAuthGuard() token: string,
+  ) {
     return this.postService.findAll(paginationDto, user);
   }
 
