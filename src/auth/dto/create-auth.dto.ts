@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNumber,
@@ -10,16 +11,20 @@ import {
 export class CreateAuthDto {
   @IsString()
   @MinLength(1)
+  @ApiProperty()
   fullName: string;
 
   @IsNumber()
+  @ApiProperty()
   age: number;
 
   @IsString()
   @IsEmail()
+  @ApiProperty()
   email: string;
 
   @IsString()
+  @ApiProperty()
   @MinLength(6)
   @MaxLength(50)
   @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {

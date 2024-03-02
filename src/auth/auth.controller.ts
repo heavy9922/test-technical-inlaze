@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginUserDto } from './interfaces/login-user';
 import { Token } from './interfaces/token.type';
 import { ValidRoles } from './interfaces/valid-roles';
@@ -14,21 +14,48 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @ApiResponse({
+    status: 201,
+    description: 'user was registered',
+    type: User,
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 403, description: 'Forbidden. Token related.' })
   create(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.create(createAuthDto);
   }
 
   @Post('login')
+  @ApiResponse({
+    status: 201,
+    description: 'user was login',
+    type: LoginUserDto,
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 403, description: 'Forbidden. Token related.' })
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }
 
   @Post('logout')
+  @ApiResponse({
+    status: 201,
+    description: 'user was logout',
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 403, description: 'Forbidden. Token related.' })
   logoutUser(@Body() token: Token) {
     return this.authService.logoutUser(token);
   }
 
+  @ApiBearerAuth()
   @Get('refresh')
+  @ApiResponse({
+    status: 201,
+    description: 'token was refreshed',
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 403, description: 'Forbidden. Token related.' })
   @Auth(ValidRoles.user)
   async refreshToken(@GetUser() user: User) {
     return this.authService.refreshToken(user.id);
