@@ -8,8 +8,14 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PostModule } from './post/post.module';
+import { EnvConfiguration } from './config/app.config';
+import { JoiValidationSchema } from './config/joi.validation';
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [EnvConfiguration],
+      validationSchema: JoiValidationSchema,
+    }),
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: async () => ({
@@ -21,7 +27,6 @@ import { PostModule } from './post/post.module';
         }),
       }),
     }),
-    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,

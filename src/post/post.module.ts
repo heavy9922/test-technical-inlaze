@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   controllers: [PostController],
   providers: [PostService],
-  imports: [TypeOrmModule.forFeature([Post]), AuthModule, ConfigModule],
+  imports: [ConfigModule, TypeOrmModule.forFeature([Post]), AuthModule],
   exports: [TypeOrmModule, PostService],
 })
 export class PostModule {}
