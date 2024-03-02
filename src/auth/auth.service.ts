@@ -19,6 +19,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { generateKey } from '../utils/redis';
 import { RedisLogin } from './interfaces/redis.interface';
+import { CommonService } from 'src/common/common.service';
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger('auth');
@@ -28,6 +29,7 @@ export class AuthService {
     private readonly userReporyEntity: Repository<User>,
     private readonly jwtService: JwtService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly mailService: CommonService,
   ) {}
 
   async create(createAuthDto: CreateAuthDto) {
@@ -40,6 +42,7 @@ export class AuthService {
       });
       await this.userReporyEntity.save(user);
       delete user.password;
+      await this.mailService.sendConfirmationEmail(userData.email);
       return {
         ...user,
         token: this.getJwtToken({ id: user.id }),
@@ -115,6 +118,20 @@ export class AuthService {
   private getJwtToken(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
     return token;
+  }
+
+  async findByEmail(email: string) {
+    return await this.userReporyEntity.findOne({ where: { email: email } });
+  }
+
+  async confirmUser(isConfirmed: boolean, email: string) {
+    const user = await this.findByEmail(email);
+    if (!user)
+      throw new UnauthorizedException(`Not found user with email ${email}`);
+    isConfirmed = true;
+    let confirm = { ...user, isConfirmed };
+    const update = await this.userReporyEntity.save(confirm);
+    return update;
   }
 
   private handleException(err: any): never {

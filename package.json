@@ -20,9 +20,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.11.2",
+    "@nestjs/axios": "^3.0.2",
     "@nestjs/cache-manager": "^2.2.1",
     "@nestjs/common": "^10.0.0",
-    "@nestjs/config": "^3.0.0",
+    "@nestjs/config": "^3.2.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/jwt": "^10.1.0",
     "@nestjs/mapped-types": "*",
@@ -39,6 +41,7 @@
     "cors": "^2.8.5",
     "cripto": "^1.1.4",
     "joi": "^17.12.2",
+    "mailjet-sendemail": "^1.1.4",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.11.1",

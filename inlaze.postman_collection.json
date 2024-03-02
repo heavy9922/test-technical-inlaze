@@ -47,7 +47,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"yefersoncasti3@gmail.com\",\n    \"password\":\"Admin1234\"\n}",
+							"raw": "{\n    \"email\":\"yefersoncasti@gmail.com\",\n    \"password\":\"Admin1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -77,7 +77,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZjZiMmRlLWY1MDMtNDc2Zi1hYzhmLTU0ZDcwNDQwNzYxNiIsImlhdCI6MTcwOTMyODY1MywiZXhwIjoxNzA5MzMyMjUzfQ.p1nKq0U2arbZElIt7DudVSjg54_0K2EdD8Jg0CMT-wE",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -92,6 +92,44 @@
 								"api",
 								"auth",
 								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirm account",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/auth/confirm?isConfirmed=true&email=yefersoncasti@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"confirm"
+							],
+							"query": [
+								{
+									"key": "isConfirmed",
+									"value": "true"
+								},
+								{
+									"key": "email",
+									"value": "yefersoncasti@gmail.com"
+								}
 							]
 						}
 					},
@@ -146,7 +184,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxZjZiMmRlLWY1MDMtNDc2Zi1hYzhmLTU0ZDcwNDQwNzYxNiIsImlhdCI6MTcwOTMzMjQyOCwiZXhwIjoxNzA5MzM2MDI4fQ.VU3XKq9zKMrzeH02w_iXBk5tj__LR-N5b4On0SGdwNY",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -173,7 +211,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhMzQ3NzQyLWM2YzYtNGY3Yy04MTU3LWMwZTk2MzE1ZDZhZSIsImlhdCI6MTcwOTMzMzI0OCwiZXhwIjoxNzA5MzM2ODQ4fQ.MCRwhcNE_2mPYJX5g7eCfn3JLGXpPXAnbkxVxtBhbYU",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -209,7 +247,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdhMzQ3NzQyLWM2YzYtNGY3Yy04MTU3LWMwZTk2MzE1ZDZhZSIsImlhdCI6MTcwOTMzMzg4OCwiZXhwIjoxNzA5MzM3NDg4fQ.Hqhdtu9Wa0uMWDTodt5_DJ2wjOvX-fasaXxWBxXLs5M",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -250,7 +288,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3MTMwYTMzLWMyZjctNDQ2Yi04Y2ViLTcyYTFkOThhZWMxNiIsImlhdCI6MTcwOTMzODgwNiwiZXhwIjoxNzA5MzQyNDA2fQ.obAN3F42kRUL8260KYbQc_Us48WkThqvYXDi-zI7iy4",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -285,12 +323,12 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3MTMwYTMzLWMyZjctNDQ2Yi04Y2ViLTcyYTFkOThhZWMxNiIsImlhdCI6MTcwOTMzODgwNiwiZXhwIjoxNzA5MzQyNDA2fQ.obAN3F42kRUL8260KYbQc_Us48WkThqvYXDi-zI7iy4",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/post",
+							"raw": "http://localhost:3000/api/post?limit=10&offset=4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -299,6 +337,16 @@
 							"path": [
 								"api",
 								"post"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "4"
+								}
 							]
 						}
 					},
@@ -311,7 +359,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3MTMwYTMzLWMyZjctNDQ2Yi04Y2ViLTcyYTFkOThhZWMxNiIsImlhdCI6MTcwOTMzODgwNiwiZXhwIjoxNzA5MzQyNDA2fQ.obAN3F42kRUL8260KYbQc_Us48WkThqvYXDi-zI7iy4",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -338,7 +386,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3MTMwYTMzLWMyZjctNDQ2Yi04Y2ViLTcyYTFkOThhZWMxNiIsImlhdCI6MTcwOTMzODgwNiwiZXhwIjoxNzA5MzQyNDA2fQ.obAN3F42kRUL8260KYbQc_Us48WkThqvYXDi-zI7iy4",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -374,7 +422,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3MTMwYTMzLWMyZjctNDQ2Yi04Y2ViLTcyYTFkOThhZWMxNiIsImlhdCI6MTcwOTMzODgwNiwiZXhwIjoxNzA5MzQyNDA2fQ.obAN3F42kRUL8260KYbQc_Us48WkThqvYXDi-zI7iy4",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -402,7 +450,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3MTMwYTMzLWMyZjctNDQ2Yi04Y2ViLTcyYTFkOThhZWMxNiIsImlhdCI6MTcwOTMzODgwNiwiZXhwIjoxNzA5MzQyNDA2fQ.obAN3F42kRUL8260KYbQc_Us48WkThqvYXDi-zI7iy4",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -430,7 +478,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3MTMwYTMzLWMyZjctNDQ2Yi04Y2ViLTcyYTFkOThhZWMxNiIsImlhdCI6MTcwOTMzODgwNiwiZXhwIjoxNzA5MzQyNDA2fQ.obAN3F42kRUL8260KYbQc_Us48WkThqvYXDi-zI7iy4",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],

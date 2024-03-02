@@ -11,4 +11,7 @@ export const EnvConfiguration = () => ({
   redisPort: process.env.REDIS_PORT,
   redisEnabed: process.env.REDIS,
   hostApi: process.env.HOST_API,
+  mailKeyApi:process.env.MAILJET_API_KEY,
+  mailKeySecret:process.env.MAILJET_API_SECRET,
+  mail:process.env.MAILJET_SENDER_EMAIL
 });

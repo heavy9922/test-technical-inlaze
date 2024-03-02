@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -59,5 +59,11 @@ export class AuthController {
   @Auth(ValidRoles.user)
   async refreshToken(@GetUser() user: User) {
     return this.authService.refreshToken(user.id);
+  }
+
+  @Get('confirm')
+  async confirmUser(@Query() queryParams) {
+    const { isConfirmed, email } = queryParams;
+    return this.authService.confirmUser(isConfirmed, email);
   }
 }

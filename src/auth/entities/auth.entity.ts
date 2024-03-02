@@ -49,6 +49,9 @@ export class User {
   })
   roles: string[];
 
+  @Column({ default: false })
+  isConfirmed: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

@@ -12,4 +12,7 @@ export const JoiValidationSchema = Joi.object({
   REDIS_PORT: Joi.number().default(6379).required(),
   REDIS: Joi.boolean().default(false).required(),
   HOST_API: Joi.string().required(),
+  MAILJET_API_KEY: Joi.string().required(),
+  MAILJET_API_SECRET: Joi.string().required(),
+  MAILJET_SENDER_EMAIL: Joi.string().required(),
 });
