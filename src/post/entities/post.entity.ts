@@ -35,7 +35,7 @@ export class Post {
   likes: number;
 
   @ApiProperty()
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => User, (user) => user.posts, { eager: true })
   user: User;
 
   @CreateDateColumn({ name: 'created_at' })
