@@ -73,7 +73,7 @@ export class AuthService {
     let cache: RedisLogin = await this.cacheManager.get(keyString);
     if (!cache) {
       data = await this.loginUser(loginUserDto);
-      await this.cacheManager.set(keyString, data, 3600);
+      await this.cacheManager.set(keyString, data, 1000000 * 36); // 36 equivale a una hora cache
     } else {
       data = cache;
     }
