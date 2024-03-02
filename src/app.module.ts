@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { PostModule } from './post/post.module';
 @Module({
   imports: [
     CacheModule.registerAsync({
@@ -36,6 +37,7 @@ import { UsersModule } from './users/users.module';
     }),
     AuthModule,
     UsersModule,
+    PostModule,
   ],
   controllers: [],
   providers: [],

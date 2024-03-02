@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { Post } from 'src/post/entities/post.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -15,27 +17,32 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ApiProperty()
   @Column('text')
   fullName: string;
 
+  @ApiProperty()
   @Column('integer')
   age: number;
 
+  @ApiProperty()
   @Column('text', {
     unique: true,
   })
   email: string;
 
+  @ApiProperty()
   @Column('text', {
     select: false,
   })
   password: string;
 
+  @ApiProperty()
   @Column('text', {
     array: true,
     default: ['user'],
   })
-  roles: string[]
+  roles: string[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
@@ -45,6 +52,9 @@ export class User {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: Date | null;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post;
 
   @BeforeInsert()
   checkInsert() {
