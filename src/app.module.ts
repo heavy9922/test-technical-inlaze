@@ -22,7 +22,7 @@ import { JoiValidationSchema } from './config/joi.validation';
         store: await redisStore({
           socket: {
             host: process.env.REDIS_URI,
-            port: 6379,
+            port: +process.env.REDIS_PORT,
           },
         }),
       }),
